@@ -27,7 +27,7 @@ export default async function Home() {
           height={37}
           priority
         />
-        <h1>EGP 0.00 for 3 months of Premium</h1>
+        <h1>Sign in or Sign up</h1>
         <p>
           Enjoy ad-free music listening, offline playback, and more. Cancel
           anytime.
@@ -45,19 +45,12 @@ export default async function Home() {
             <Link href={"/api/auth/signin"}>Sign in</Link>
           )}
         </div>
-        <div className={styles.cover}>
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
+      </div>
+      <div className={styles.cover}>
+        <div className={styles.thirteen}>
+          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
         </div>
       </div>
-
       {/* <div className={styles.grid}>
         <a
           href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
