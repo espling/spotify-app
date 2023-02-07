@@ -1,51 +1,64 @@
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from './page.module.scss'
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "./page.module.scss";
+import { getCurrentUser, getSession } from "@/lib/auth/session";
+import { signIn, signOut } from "next-auth/react";
 
-const inter = Inter({ subsets: ['latin'] })
+import Button from "@/ui/Button/Button";
+import clsx from "clsx";
+import Link from "next/link";
 
-export default function Home() {
+const inter = Inter({ subsets: ["latin"] });
+
+export default async function Home() {
+  const session = await getSession();
+  console.log(session);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
+    <main className={styles.wrapper}>
+      <div className={styles.content}>
         <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
+          style={{
+            objectFit: "contain",
+          }}
+          src="/assets/Spotify_Logo_RGB_White.png"
+          alt="Spotify Logo"
           width={180}
           height={37}
           priority
         />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
+        <h1>EGP 0.00 for 3 months of Premium</h1>
+        <p>
+          Enjoy ad-free music listening, offline playback, and more. Cancel
+          anytime.
+        </p>
+
+        <div className={styles.buttons}>
+          {/* <Button onClick={() => signIn}>Login</Button> */}
+          {session ? (
+            <>
+              Signed in as {session?.user?.email} <br />
+              <Link href={"/api/auth/signout"}>Sign out</Link>
+              {/* <button onClick={() => signOut()}>Sign out</button> */}
+            </>
+          ) : (
+            <Link href={"/api/auth/signin"}>Sign in</Link>
+          )}
+        </div>
+        <div className={styles.cover}>
+          <div className={styles.thirteen}>
+            <Image
+              src="/thirteen.svg"
+              alt="13"
+              width={40}
+              height={31}
+              priority
+            />
+          </div>
         </div>
       </div>
 
-      <div className={styles.grid}>
+      {/* <div className={styles.grid}>
         <a
           href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
           className={styles.card}
@@ -85,7 +98,7 @@ export default function Home() {
             Instantly deploy your Next.js site to a shareable URL with Vercel.
           </p>
         </a>
-      </div>
+      </div> */}
     </main>
-  )
+  );
 }
