@@ -28,7 +28,7 @@ export default async function Home() {
           priority
         />
         <h1>Sign in or Sign up</h1>
-        <p>
+        <p className={inter.className}>
           Enjoy ad-free music listening, offline playback, and more. Cancel
           anytime.
         </p>
