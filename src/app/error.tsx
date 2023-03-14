@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Boundary } from "#/ui/Boundary";
-import Button from "@/ui/Button/Button";
+import Button from "#/ui/Button/Button";
 import styles from "#/styles/error.module.scss";
 
 export default function Error({ error, reset }: any) {

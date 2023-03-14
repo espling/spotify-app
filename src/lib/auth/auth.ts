@@ -9,6 +9,7 @@ const {
   SPOTIFY_APP_REDIRECT_URI,
   SPOTIFY_APP_SESSION_SECRET,
   SPOTIFY_APP_CLIENT_SECRET,
+  NEXTAUTH_SECRET,
 } = process.env;
 
 const SPOTIFY_REFRESH_TOKEN_URL = "https://accounts.spotify.com/api/token";
@@ -22,6 +23,9 @@ const scopes = [
   "playlist-modify-private",
   "playlist-modify-public",
 ];
+
+const scope =
+  "user-read-recently-played user-read-playback-state user-top-read user-modify-playback-state user-read-currently-playing user-follow-read playlist-read-private user-read-email user-read-private user-library-read playlist-read-collaborative";
 
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
@@ -58,7 +62,10 @@ export const authOptions: NextAuthOptions = {
     SpotifyProvider({
       clientId: SPOTIFY_APP_CLIENT_ID!,
       clientSecret: SPOTIFY_APP_CLIENT_SECRET!,
-      authorization: `https://accounts.spotify.com/authorize?response_type=code&scope=${scopes}`,
+      // authorization: `https://accounts.spotify.com/authorize?response_type=code&scope=${scopes}`,
+      authorization: {
+        params: { scope },
+      },
     }),
   ],
   callbacks: {
@@ -85,8 +92,14 @@ export const authOptions: NextAuthOptions = {
       session.user = token.user;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
   },
   secret: SPOTIFY_APP_SESSION_SECRET,
+  pages: {
+    signIn: "/login",
+  },
 };
 
 // export default NextAuth(authOptions);
